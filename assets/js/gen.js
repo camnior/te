@@ -175,6 +175,4 @@ function randomSustitute(input, charsToReplace, replacementChars = '0123456789')
   return result;
 }
 
-const resetTextarea = () => document.querySelector('#output2').value = '';
-const showCurrentYear = () => document.querySelector('#date').textContent = new Date().getFullYear();
-
+const resetTextarea = () => document.querySelector('#
