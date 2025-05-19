@@ -162,3 +162,19 @@ function deleteInvalidShits(input, invalidChars) {
     const justInputs = input.charAt(i);
     if (invalidChars.indexOf(justInputs) === -1) result += justInputs;
   }
+  return result;
+}
+
+function randomSustitute(input, charsToReplace, replacementChars = '0123456789') {
+  let result = '';
+  for (let i = 0; i < input.length; i++) {
+    const justInputs = input.charAt(i);
+    if (charsToReplace.indexOf(justInputs) === -1) result += justInputs;
+    else result += replacementChars.charAt(Math.floor(Math.random() * replacementChars.length));
+  }
+  return result;
+}
+
+const resetTextarea = () => document.querySelector('#output2').value = '';
+const showCurrentYear = () => document.querySelector('#date').textContent = new Date().getFullYear();
+
