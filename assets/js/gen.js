@@ -6,12 +6,16 @@ Portfolio: https://yael.pages.dev/
 */
 document.addEventListener('DOMContentLoaded', () => {
   showCurrentYear();
-  document.getElementById('generar').addEventListener('click', ()=> {
+  document.getElementById('generar').addEventListener('click', () => {
     const maxCards = 100;
     const binInput = document.getElementById('ccpN').value;
-    generateCardNumbers(binInput, maxCards);
+    if (binInput.length > 0) {
+      generateCardNumbers(binInput, maxCards);
+    } else {
+      alert("Por favor, ingresa un BIN válido.");
+    }
   });
-  document.getElementById('ccpN').addEventListener('change', addXToBin);
+  document.getElementById('ccpN').addEventListener('input', addXToBin);
   document.getElementById('cleanText').addEventListener('click', resetTextarea);
 });
 
@@ -93,11 +97,13 @@ function generateCardNumbers(cardBin, maxCards) {
           : document.getElementById('eccv').value;
         result += `${formatOfGen}${formattedNumber}${expDate}${(document.getElementById('ccvi').checked) ? ('|' + randomCVV) : ''}${(document.getElementById('ccbank').checked) ? ('|' + checkCardBrand) : ''}\n`;
       } else {
-        result = 'Error';
+        result = 'Error al generar tarjeta';
         break;
       }
     }
     document.getElementById('output2').value = result;
+  } else {
+    document.getElementById('output2').value = 'Por favor, ingresa un BIN válido.';
   }
 }
 
@@ -156,18 +162,3 @@ function deleteInvalidShits(input, invalidChars) {
     const justInputs = input.charAt(i);
     if (invalidChars.indexOf(justInputs) === -1) result += justInputs;
   }
-  return result;
-}
-
-function randomSustitute(input, charsToReplace, replacementChars = '0123456789') {
-  let result = '';
-  for (let i = 0; i < input.length; i++) {
-    const justInputs = input.charAt(i);
-    if (charsToReplace.indexOf(justInputs) === -1) result += justInputs;
-    else result += replacementChars.charAt(Math.floor(Math.random() * replacementChars.length));
-  }
-  return result;
-}
-
-const resetTextarea = () => document.querySelector('#output2').value = '';
-const showCurrentYear = () => document.querySelector('#date').textContent = new Date().getFullYear();
